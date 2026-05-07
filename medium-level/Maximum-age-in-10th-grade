@@ -1,0 +1,13 @@
+-- Максимальный возраст в 10 классах
+-- 
+-- Найдите максимальный возраст (количество лет) среди обучающихся 10 классов на сегодняшний день. Для получения текущих даты и времени используйте функцию NOW().
+-- Используйте конструкцию "as max_year" для указания максимального возраста в годах. Это необходимо для корректной проверки.
+-- Поля в результирующей таблице:
+-- max_year
+
+SELECT 
+    MAX(EXTRACT(YEAR FROM AGE(NOW(), birthday))) AS max_year
+FROM Student
+JOIN Student_in_class ON Student_in_class.student = Student.id
+JOIN Class ON Class.id = Student_in_class.class
+WHERE Class.name LIKE '10%'
