@@ -1,0 +1,13 @@
+-- Самые используемые кабинеты
+-- 
+-- Какие кабинеты чаще всего использовались для проведения занятий? Выведите те, которые использовались максимальное количество раз.
+-- Поля в результирующей таблице:
+-- classroom
+
+SELECT classroom
+FROM Schedule
+GROUP BY classroom
+HAVING COUNT(*) = (
+    SELECT MAX(count)
+    FROM (SELECT COUNT(classroom) AS count FROM Schedule GROUP BY classroom)
+)
