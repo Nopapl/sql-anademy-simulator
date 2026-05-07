@@ -1,0 +1,20 @@
+-- Самый дорогой деликатес
+-- 
+-- Найдите самый дорогой деликатес (delicacies) и выведите его цену
+-- Поля в результирующей таблице:
+-- good_name
+-- unit_price
+
+SELECT 
+    Goods.good_name,
+    Payments.unit_price
+FROM Goods
+JOIN Payments ON Payments.good = Goods.good_id
+JOIN GoodTypes ON GoodTypes.good_type_id = Goods.type
+WHERE Payments.unit_price = (
+    SELECT MAX(unit_price)
+    FROM Payments
+    JOIN Goods ON Goods.good_id = good
+    JOIN GoodTypes ON GoodTypes.good_type_id = Goods.type
+    WHERE GoodTypes.good_type_name = 'delicacies'
+) AND GoodTypes.good_type_name = 'delicacies'
