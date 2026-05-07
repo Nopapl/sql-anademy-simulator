@@ -1,0 +1,15 @@
+-- Удалить компании, совершившие наименьшее количество рейсов.
+
+DELETE FROM Company
+WHERE id IN(
+    SELECT company
+    FROM (
+        SELECT
+            company,
+            COUNT(company) AS cnt,
+            MIN(COUNT(company)) OVER() AS min_cnt
+        FROM Trip
+        GROUP BY company
+    )
+    WHERE cnt = min_cnt
+)
