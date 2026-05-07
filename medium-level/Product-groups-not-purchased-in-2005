@@ -1,0 +1,14 @@
+-- Группы товаров, не купленные в 2005 году
+-- 
+-- Определить группы товаров, которые не приобретались в 2005 году
+-- Поля в результирующей таблице:
+-- good_type_name
+
+SELECT 
+    good_type_name
+FROM GoodTypes
+JOIN Goods ON Goods.type = GoodTypes.good_type_id
+LEFT JOIN Payments ON Payments.good = Goods.good_id
+    AND EXTRACT(YEAR FROM Payments.date) = '2005'
+GROUP BY good_type_name
+HAVING COUNT(payment_id) = 0
