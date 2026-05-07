@@ -1,0 +1,17 @@
+-- Сортировка пассажиров по количеству полетов
+-- 
+-- Вывести идентификатор, имя и количество перелётов каждого пассажира, совершившего хотя бы 1 полёт. Результат отсортировать по количеству перелётов (по убыванию) и имени (по возрастанию).
+-- Используйте конструкцию "as count" для агрегатной функции подсчета количества перелетов. Это необходимо для корректной проверки.
+-- Поля в результирующей таблице:
+-- id
+-- name
+-- count
+
+SELECT 
+    Passenger.id,
+    Passenger.name,
+    COUNT(Pass_in_trip.id) AS count
+FROM Passenger
+JOIN Pass_in_trip ON Pass_in_trip.passenger = Passenger.id
+GROUP BY Passenger.id, Passenger.name
+ORDER BY count DESC, Passenger.name
