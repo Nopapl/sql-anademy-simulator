@@ -1,0 +1,16 @@
+-- Добавить отзыв от George Clooney
+
+-- Добавить отзыв с рейтингом 5 на жилье, находящиеся по адресу "11218, Friel Place, New York", от имени "George Clooney"
+-- В качестве первичного ключа (id) укажите количество записей в таблице + 1.
+-- Резервация комнаты, на которую вам нужно оставить отзыв, уже была сделана, нужно лишь ее найти.
+
+INSERT INTO Reviews(id, reservation_id, rating)
+SELECT 
+    (SELECT MAX(id) + 1 FROM Reviews), 
+    Reservations.id, 
+    5
+FROM Reservations
+JOIN Users ON Users.id = Reservations.user_id
+JOIN Rooms ON Rooms.id = Reservations.room_id
+WHERE Rooms.address = '11218, Friel Place, New York'
+    AND Users.name = 'George Clooney'
