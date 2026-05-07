@@ -1,0 +1,18 @@
+-- Средний возраст покупателей Smartwatch
+-- 
+-- Какой средний возраст клиентов, купивших Smartwatch (использовать наименование товара product.name) в 2024 году?
+-- Поля в результирующей таблице:
+-- average_age
+
+SELECT 
+    AVG(age) AS average_age
+FROM (
+    SELECT 
+        DISTINCT Purchase.customer_key,
+        Customer.age
+    FROM Customer
+    JOIN Purchase ON Purchase.customer_key = Customer.customer_key
+    JOIN Product ON Product.product_key = Purchase.product_key
+    WHERE Product.name = 'Smartwatch'
+        AND EXTRACT(YEAR FROM Purchase.date) = 2024
+)
